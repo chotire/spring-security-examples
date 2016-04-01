@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%-5level %d{yyyy-MM-dd HH:mm:ss} %logger[%method:%line] - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+    <root level="info">
+        <appender-ref ref="console" />
+    </root>
+    <logger name="org.springframework.web" level="debug" />
+</configuration>
