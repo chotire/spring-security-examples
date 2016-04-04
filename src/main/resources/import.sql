@@ -1,0 +1,1 @@
+insert into account (username, password, role, nickname) values ('chotire', '1234', 'ROLE_ADMIN', '조타이어');
