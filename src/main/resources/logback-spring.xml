@@ -9,5 +9,7 @@
     <root level="info">
         <appender-ref ref="console" />
     </root>
-    <logger name="org.springframework.web" level="debug" />
+    <!-- <logger name="org.springframework.web" level="debug" /> -->
+    <logger name="org.springframework.data" level="debug" />
+    <!-- <logger name="org.springframework.security" level="debug" /> -->
 </configuration>

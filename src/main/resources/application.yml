@@ -1,3 +1,11 @@
 spring:
-  thymeleaf:
-    mode: LEGACYHTML5
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:security
+    username: sa
+    password: 
+  jpa:
+    database: h2
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
