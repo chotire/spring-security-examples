@@ -21,6 +21,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
 
+        //spring schema를 이용한 로그인
         //auth.jdbcAuthentication().dataSource(dataSource);
         
         //test용 in-memory용 인증
@@ -29,13 +30,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //h2 config...
+        http
+            .authorizeRequests()
+                .antMatchers("/h2/console/**").permitAll()
+                .and()
+            .headers().frameOptions().disable();
+        
         http
             .authorizeRequests()
                 .antMatchers("/", "/index").permitAll()
                 .antMatchers("/flot", "/morris").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/tables").hasAnyRole("ADMIN")
                 .antMatchers("/bower_components/**", "/dist/**").permitAll()
-                .antMatchers("/h2/console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .csrf().disable() // csrf를 enable하게되면 로그아웃을 반드시 post로 해야함.
@@ -58,12 +65,5 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .loginPage("/login").permitAll()
 //                .and()
 //            .logout().permitAll();
-
-        //h2 config...
-        http
-            .authorizeRequests()
-                .antMatchers("/h2/console/**").permitAll()
-                .and()
-            .headers().frameOptions().disable();
     }
 }
