@@ -14,14 +14,13 @@ import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity.IgnoredRequestConfigurer;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
-import spring.security.access.intercept.JdbcFilterInvocationSecurityMetadataSource;
+import spring.security.access.intercept.JdbcSecurityMetadataSource;
 import spring.security.repository.MenuRepository;
 
 @Configuration
@@ -86,7 +85,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.debug(true).ignoring().antMatchers("/", "/index", "/bower_components/**", "/dist/**", "/js/**", "/resources/**", "/static/**", "/favicon.ico");
+        web.debug(true).ignoring().antMatchers("/", "/index", "/bower_components/**", "/dist/**", "/js/**", "/resources/**", "/static/**", "/favicon.ico").and().securityInterceptor(filterSecurityInterceptor());
     }
     
     @Bean
@@ -95,6 +94,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         filterSecurityInterceptor.setSecurityMetadataSource(securityMetadataSource());
         filterSecurityInterceptor.setAuthenticationManager(authenticationManager());
         filterSecurityInterceptor.setAccessDecisionManager(accessDecisionManager());
+        filterSecurityInterceptor.setPublishAuthorizationSuccess(true);
         return filterSecurityInterceptor;
     }
     
@@ -104,7 +104,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         AuthenticatedVoter authenticatedVoter = new AuthenticatedVoter();
         RoleVoter roleVoter = new RoleVoter();
         List<AccessDecisionVoter<? extends Object>> voters = new ArrayList<>();
-//        voters.add(authenticatedVoter);
+        voters.add(authenticatedVoter);
         voters.add(roleVoter);
         return new AffirmativeBased(voters);
     }
@@ -115,6 +115,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Bean
     public FilterInvocationSecurityMetadataSource securityMetadataSource() {
-        return new JdbcFilterInvocationSecurityMetadataSource(menuRepository);
+        return new JdbcSecurityMetadataSource(menuRepository);
     }
 }

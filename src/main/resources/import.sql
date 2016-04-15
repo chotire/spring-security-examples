@@ -13,7 +13,7 @@ insert into menu (url, name, sort_order) values ('/morris', 'Morris', 2);
 insert into menu (url, name, sort_order) values ('/tables', 'Tables', 3);
 
 insert into permission (menu_url, role_id, create, read, update, delete) values ('/flot', 'ROLE_USER', 1, 1, 1, 1);
-insert into permission (menu_url, role_id, create, read, update, delete) values ('/flot', 'ROLE_ADMIN', 1, 1, 1, 1);
 insert into permission (menu_url, role_id, create, read, update, delete) values ('/morris', 'ROLE_USER', 1, 1, 1, 1);
+insert into permission (menu_url, role_id, create, read, update, delete) values ('/flot', 'ROLE_ADMIN', 1, 1, 1, 1);
 insert into permission (menu_url, role_id, create, read, update, delete) values ('/morris', 'ROLE_ADMIN', 1, 1, 1, 1);
 insert into permission (menu_url, role_id, create, read, update, delete) values ('/tables', 'ROLE_ADMIN', 1, 1, 1, 1);

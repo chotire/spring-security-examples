@@ -17,11 +17,11 @@ import spring.security.domain.Menu;
 import spring.security.domain.Role;
 import spring.security.repository.MenuRepository;
 
-public class JdbcFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+public class JdbcSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 	private final MenuRepository menuRepository;
 	private final Map<String, Menu> permissions;
 	
-	public JdbcFilterInvocationSecurityMetadataSource(MenuRepository menuRepository) {
+	public JdbcSecurityMetadataSource(MenuRepository menuRepository) {
 		this.menuRepository = menuRepository;
 		permissions = new Hashtable<>();
 	}
